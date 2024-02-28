@@ -30,3 +30,21 @@ names_to_tax_local <- function(orgnames, names_db, rankedlineage_db, verbose = F
         }  
         return(df_out)
 }
+
+names_to_tax_online <- function(orgnames, verbose = FALSE){
+        df_out <- tibble()
+        for(i in 1:length(orgnames)){
+                tax <- orgnames[i]
+                cat(i, tax, "\n")
+                tax_record <- try(classification(tax, db = "ncbi", max_tries = 10))
+
+                if (inherits(tax_record, "try-error")) {
+                        if(verbose) cat("Error:", i, ":", tax, "\n")      
+                } else {  
+                        if(class(tax_record[[1]]) == "data.frame"){
+                                df_out <- bind_rows(df_out, tibble("query_org_name" = tax, tax_record[[1]]))
+                        }
+                }
+        }
+        return(df_out)
+}
