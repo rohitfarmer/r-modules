@@ -27,3 +27,15 @@ tax_dat <- mtax$names_to_tax_local(orgnames, names_db = namesdb, rankedlineage_d
 # Carry out online database search
 tax_dat <- names_to_tax_online(orgnames, verbose = FALSE)
 ```
+
+## Parse BLASTp output from a text file with default format i.e. -outfmt 0
+
+```R
+library(modules)
+
+# Load the module and create an object
+blastp <- modules::use(file.path("r-modules", "parse-blast-output.R"))
+
+# Parse the output by passing a text file as the function argument
+blast_dat <- blatp$parse_blast_fmt_0(blast_output_file)
+```
