@@ -1,6 +1,7 @@
 # Parse BLAST output from a text file with the default format i.e. outfmt 0
 
-library(tidyverse)
+if (!require('tibble')) install.packages('tibble'); import(tibble)
+if (!require('dplyr')) install.packages('dplyr'); import(dplyr)
 
 parse_blast_fmt_0 <- function(blast_output_file){
         blast_lines <- readLines(blast_output_file)

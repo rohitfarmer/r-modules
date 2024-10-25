@@ -37,5 +37,5 @@ library(modules)
 blastp <- modules::use(file.path("r-modules", "parse-blast-output.R"))
 
 # Parse the output by passing a text file as the function argument
-blast_dat <- blatp$parse_blast_fmt_0(blast_output_file)
+blast_dat <- blastp$parse_blast_fmt_0(blast_output_file)
 ```
