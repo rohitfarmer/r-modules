@@ -48,3 +48,21 @@ names_to_tax_online <- function(orgnames, verbose = FALSE){
         }
         return(df_out)
 }
+
+id_to_tax_local <- function(taxids, rankedlineage_db, verbose = FALSE){
+        df_out <- tibble()
+        cores <- detectCores(all.tests = FALSE, logical = FALSE)
+        cores <- cores - 1
+        registerDoMC(cores)
+        df_out <- foreach(i = 1:length(taxids), .combine = bind_rows) %dopar%{
+                taxid <- taxids[[i]]
+                if(verbose){
+                        cat(paste(i, taxid, "\n"))
+                }
+
+                if(length(taxid) !=0){
+                        rankedlineage_db %>% dplyr::filter(tax_id == taxid)
+                }
+        }  
+        return(df_out)
+}
